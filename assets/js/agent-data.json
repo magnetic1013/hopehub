@@ -1,0 +1,27 @@
+[
+  {
+    "title": "How to handle a rude caller",
+    "content": "Stay calm. Lower your voice slightly. Say 'I want to help, but I need you to speak to me calmly.' Document the call. Then go take 5 minutes to breathe.",
+    "tags": ["rude caller", "phone", "angry customer", "calls"]
+  },
+  {
+    "title": "Spotting scam emails",
+    "content": "Check the sender address carefully. Look for urgency, bad grammar, and requests for passwords or payments. When in doubt, delete and report.",
+    "tags": ["email", "scam", "phishing", "security"]
+  },
+  {
+    "title": "Remote work burnout",
+    "content": "Set a hard stop time. Create a 'commute' — walk around the block before and after work. Schedule at least one call with a colleague weekly just to talk, not work.",
+    "tags": ["remote", "burnout", "isolation", "work from home"]
+  },
+  {
+    "title": "Feeling invisible in the office",
+    "content": "Send a weekly 'invisible cost' email listing what you handled that no one saw. Not bragging — just documentation. Managers respond to data.",
+    "tags": ["office", "morale", "invisible", "promotion"]
+  },
+  {
+    "title": "Hybrid promotion gap",
+    "content": "Schedule a monthly visibility chat with your manager. Ask directly: 'What would promotion look like for me in this setup?' Get it in writing.",
+    "tags": ["hybrid", "promotion", "career", "remote"]
+  }
+]

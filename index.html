@@ -1,0 +1,60 @@
+---
+layout: default
+title: Home
+---
+<div class="hero">
+  <h2>You're the lifeline of every business.</h2>
+  <p>And you shouldn't have to carry it alone. The Admin Aisle is a daily support hub for administrative professionals — in-office, hybrid, and remote.</p>
+  
+  <div class="agent-search">
+    <h3>What's going on today?</h3>
+    <input type="text" id="agent-input" placeholder="Type a problem... rude caller, burnout, scam email" onkeyup="searchAgent()">
+    <div id="agent-results"></div>
+  </div>
+  
+  <a href="{{ '/contact' | relative_url }}" class="cta-button">Join the Hub</a>
+</div>
+
+<section class="features">
+  <div class="feature-card">
+    <h3>Live Daily Hub</h3>
+    <p>Three days a week. Monday for in-office, Wednesday for hybrid, Friday for remote. Real talk, real support, real structure.</p>
+  </div>
+  <div class="feature-card">
+    <h3>The Podcast</h3>
+    <p>"The Admin Aisle: Seen at the Desk" — 10 minutes on the reality of admin work. New episodes Monday, Wednesday, Friday.</p>
+  </div>
+  <div class="feature-card">
+    <h3>The Vault</h3>
+    <p>Info cards, replays, joke archive, and beat stories. The good, the bad, and the "I've been there too."</p>
+  </div>
+</section>
+
+<script>
+function searchAgent() {
+  var input = document.getElementById('agent-input');
+  var filter = input.value.toLowerCase();
+  var results = document.getElementById('agent-results');
+  results.innerHTML = '';
+  
+  if (filter.length < 2) return;
+  
+  fetch('{{ "/assets/js/agent-data.json" | relative_url }}')
+    .then(response => response.json())
+    .then(data => {
+      var matches = data.filter(function(item) {
+        return item.tags.some(function(tag) { return tag.includes(filter); }) ||
+               item.title.toLowerCase().includes(filter) ||
+               item.content.toLowerCase().includes(filter);
+      });
+      
+      if (matches.length === 0) {
+        results.innerHTML = '<p class="no-results">No matches yet. Email me — I\'ll add it to the Agent.</p>';
+      } else {
+        matches.slice(0, 5).forEach(function(item) {
+          results.innerHTML += '<div class="agent-result"><strong>' + item.title + '</strong><p>' + item.content + '</p></div>';
+        });
+      }
+    });
+}
+</script>
