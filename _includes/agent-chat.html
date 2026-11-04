@@ -1,0 +1,71 @@
+<div id="agent-bubble" onclick="toggleAgent()">💬</div>
+
+<div id="agent-window" style="display:none;">
+  <div id="agent-header">
+    <strong>The Admin Agent</strong>
+    <span onclick="toggleAgent()" style="cursor:pointer; float:right;">✕</span>
+  </div>
+  <div id="agent-messages">
+    <div class="agent-msg bot">Hi. What's going on today? Type anything — rude caller, burnout, scam email, hybrid schedule...</div>
+  </div>
+  <div id="agent-input-row">
+    <input type="text" id="agent-chat-input" placeholder="Type your question..." onkeypress="if(event.key==='Enter') sendAgent()">
+    <button onclick="sendAgent()">Send</button>
+  </div>
+</div>
+
+<script>
+let agentData = [];
+
+fetch('{{ "/assets/js/agent-data.json" | relative_url }}')
+  .then(r => r.json())
+  .then(d => { agentData = d.entries || d; });
+
+function toggleAgent() {
+  const w = document.getElementById('agent-window');
+  w.style.display = w.style.display === 'none' ? 'flex' : 'none';
+}
+
+function sendAgent() {
+  const input = document.getElementById('agent-chat-input');
+  const text = input.value.trim();
+  if (!text) return;
+  
+  addMsg(text, 'user');
+  input.value = '';
+  
+  setTimeout(() => {
+    const reply = findAnswer(text);
+    addMsg(reply, 'bot');
+  }, 500);
+}
+
+function addMsg(text, who) {
+  const box = document.getElementById('agent-messages');
+  const div = document.createElement('div');
+  div.className = 'agent-msg ' + who;
+  div.textContent = text;
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
+}
+
+function findAnswer(query) {
+  const q = query.toLowerCase();
+  let best = null;
+  let bestScore = 0;
+  
+  agentData.forEach(item => {
+    let score = 0;
+    item.tags.forEach(tag => {
+      if (q.includes(tag)) score += 2;
+    });
+    if (item.title.toLowerCase().includes(q)) score += 3;
+    if (score > bestScore) { bestScore = score; best = item; }
+  });
+  
+  if (best && bestScore > 0) {
+    return best.title + ' — ' + best.content;
+  }
+  return "I don't have an answer for that yet. But I do. Email me and I'll help you directly — and I'll add it to the Agent so the next person gets help faster.";
+}
+</script>

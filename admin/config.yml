@@ -1,0 +1,27 @@
+backend:
+  name: github
+  repo: magnetic1013/hopehub
+  branch: main
+  base_url: https://decap-proxy.magnetic1013-hopehub.workers.dev
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+collections:
+  - name: "agent"
+    label: "Admin Agent Knowledge Base"
+    files:
+      - name: "agent_data"
+        label: "Agent Q&A Entries"
+        file: "assets/js/agent-data.json"
+        fields:
+          - label: "Entries"
+            name: "entries"
+            widget: "list"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Answer", name: "content", widget: "text" }
+              - label: "Keywords/Tags"
+                name: "tags"
+                widget: "list"
+                field: { label: "Tag", name: "tag", widget: "string" }
