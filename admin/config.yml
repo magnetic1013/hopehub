@@ -3,6 +3,8 @@ backend:
   repo: magnetic1013/hopehub
   branch: main
   base_url: https://decap-proxy.magnetic1013-hopehub.workers.dev
+  auth_endpoint: /auth
+  site_url: https://magnetic1013.github.io/hopehub
 
 media_folder: "assets/uploads"
 public_folder: "/assets/uploads"
