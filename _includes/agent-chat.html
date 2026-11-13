@@ -17,9 +17,11 @@
 <script>
 let agentData = [];
 
-fetch('{{ "/assets/js/agent-data.json" | relative_url }}')
+// Hardcoded path so Jekyll doesn't break it
+fetch('/hopehub/assets/js/agent-data.json')
   .then(r => r.json())
-  .then(d => { agentData = d.entries || d; });
+  .then(d => { agentData = d.entries || d; })
+  .catch(err => console.error("Could not load agent data:", err));
 
 function toggleAgent() {
   const w = document.getElementById('agent-window');
@@ -56,10 +58,12 @@ function findAnswer(query) {
   
   agentData.forEach(item => {
     let score = 0;
-    item.tags.forEach(tag => {
-      if (q.includes(tag)) score += 2;
-    });
-    if (item.title.toLowerCase().includes(q)) score += 3;
+    if (item.tags) {
+      item.tags.forEach(tag => {
+        if (q.includes(tag.toLowerCase())) score += 2;
+      });
+    }
+    if (item.title && item.title.toLowerCase().includes(q)) score += 3;
     if (score > bestScore) { bestScore = score; best = item; }
   });
   
